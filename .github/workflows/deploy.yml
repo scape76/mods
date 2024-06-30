@@ -3,12 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -17,28 +16,24 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          
+
       - name: Use pnpm setup
         uses: pnpm/action-setup@v2.0.0
         with:
-          version: 8 
-          
+          version: 8
+
       - name: Install dependencies
         run: pnpm install
 
       - name: Build the project
         run: pnpm build
 
-     - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-
   deploy:
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-      runs-on: ubuntu-latest
-      needs: build
-      steps:
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v4
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
