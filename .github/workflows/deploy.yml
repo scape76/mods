@@ -28,6 +28,12 @@ jobs:
       - name: Build the project
         run: pnpm build
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mods-artifact
+          path: ./dist
+      
   deploy:
     permissions:
       contents: read
