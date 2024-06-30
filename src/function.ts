@@ -22,10 +22,10 @@ function visualizeFunction(func: OneDFunction) {
     .selectAll("circle")
     .data(data)
     .join("circle")
-    .attr("cx", function (d, i) {
+    .attr("cx", function (_, i) {
       return x(i);
     })
-    .attr("cy", function (d, i) {
+    .attr("cy", function (d) {
       return graphHeight - graphHeight * (d / yBounds[1]);
     })
     .attr("r", 1)
